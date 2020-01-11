@@ -66,8 +66,6 @@ class gards(Resource):
         except mysql.connector.Error as err:
             print("Something went wrong: {}".format(err))
 
-
-
 api.add_resource(pharmacy, '/<int:id>')
 api.add_resource(pharmacies, '/tanger/pharmacies')
 api.add_resource(gards, '/tanger/gards')
