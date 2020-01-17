@@ -10,12 +10,12 @@ app = Flask(__name__)
 api = Api(app)
 
 class pharmacies(Resource):
-    def get(self):
+    def get(self,city):
         try:
             cnx = mysql.connector.connect(user='root', database='pharmacies')
             cursor = cnx.cursor()
-            q="SELECT * FROM phar_tanger"
-            cursor.execute(q)
+            q="SELECT * FROM pharmacie WHERE VIL = %s"
+            cursor.execute(q,(city,))
             columns = [desc[0] for desc in cursor.description]
             result = []
             rows = cursor.fetchall()
@@ -67,7 +67,7 @@ class gards(Resource):
             print("Something went wrong: {}".format(err))
 
 api.add_resource(pharmacy, '/<int:id>')
-api.add_resource(pharmacies, '/tanger/pharmacies')
+api.add_resource(pharmacies, '/<string:city>/pharmacies')
 api.add_resource(gards, '/tanger/gards')
 
 if __name__ == '__main__':
